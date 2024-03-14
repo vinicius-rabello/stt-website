@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            font-family: "Dosis";
+        }
+
+        body {
+            display: flex;
+            flex-flow: column;
+            margin: 0;
+            background-color: #219ebc;
+        }
+
+        .content {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            height: 82vh;
+            background-color: #023047;
+        }
+
+        nav {
+            margin-top: 0;
+            height: 10vh;
+            background-color: #219ebc;
+            color: #ffffff;
+            padding: 0 1% 0 1%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .links {
+            display: flex;
+        }
+
+        .links a{
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 5px 0 5px;
+        }
+
+        .links a:hover {
+            color: #ffb703;
+        }
+
+        .box{
+            background-color: #8ecae6;
+            display: flex;
+            flex-flow: column;
+            height: 60vh;
+            width: 25vw;
+            justify-content: space-between;
+            border-radius: 20px;
+            box-shadow: 2px 2px 10px #000000;
+        }
+
+        * button {
+            border: solid 1px;
+            border-color: #023047;
+            background-color: #ffb703;
+            color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 2px #023047,
+            -0px -0px 2px #023047;
+        }
+
+        * button:hover {
+            cursor: pointer;
+            box-shadow: 0px 0px 0px, 0px 0px 0px;
+        }
+
+        .upload {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            height: 15vh;
+        }
+
+        #upload-form {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+
+        #upload-form button {
+            margin-top: 10%;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .upload-input {
+            background-color: #ffb703;
+            color: #ffffff;
+            border-radius: 5px;
+            cursor: pointer;
+            padding: 0 10px 0 10px;  
+            border: solid 1px;
+            border-color: #023047;
+            box-shadow: 0px 0px 2px #023047,
+            -0px -0px 2px #023047;
+        }
+
+        .upload-input:hover {
+            box-shadow: 0px 0px 0px, 0px 0px 0px;
+        }
+
+        .upload p {
+            width: 10vw;
+            padding-left: 5vw;
+            padding-right: 5vw;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            background-color: #ffffff;
+            text-align: center;
+            border-radius: 5px;
+            border: solid 1px;
+            border-color: #023047;
+            box-shadow: 1px 1px 5px #023047;
+        }
+
+        .transcribe {
+            text-wrap: wrap;
+            flex-grow: 1;
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+
+        .transcribe h3 {
+            text-align: left;
+            color: #ffffff;
+            text-shadow: 1px 1px 5px #023047;
+        }
+
+        .transcribe p{
+            margin-top: 0;
+            margin-left: 2.5vw;
+            margin-right: 2.5vw;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 8;
+            white-space: pre-wrap;
+            height: 22vh;
+            width: 20vw;
+            text-align: left;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 5%;
+            border: solid 2px;
+            border-color: #023047;
+            box-shadow: 1px 1px 5px #023047;
+        }
+
+        .download {
+            display: flex;
+            justify-content: center;
+            padding-top: 1vh;
+            padding-bottom: 1vh;
+            margin-bottom: 2vh;
+        }
+
+        .transcribe button {
+            background-color: #fb8500;
+        }
+
+        footer {
+            background-color: #219ebc;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        footer p {
+            color: #ffffff;
+            margin-right: 1%;
+        }
+
+    </style>
+</head>
+<body>
+
+    <% if (filename==undefined) {       %>
+    <%    filename='No file selected.'  %>
+    <%}                                 %>
+
+    <%- include('./partials/nav.ejs') %>
+    
+    <div class="content">
+        <div class="box">
+            <div class="upload">
+                <% if (filename.split('/')[2]=='undefined') { %>
+                    <p>No file selected.</p>
+                <% }else{ %>
+                    <p><%= filename.split('/')[2] %></p>
+                <%}  %>
+                <form  id="upload-form" action="/upload" method="POST" enctype="multipart/form-data">
+                    <label class="upload-input">
+                        Select File
+                        <input type="file" name="file" accept="audio/mpeg" required>
+                    </label>
+                    <button type="submit">Upload</button>
+                </form>
+            </div>
+
+            <div class="transcribe">
+                <h3>Transcription Preview:</h3>
+                <p><%= transcription %></p>
+                <form id="transcribe-form" action="/transcribe" method="POST">
+                    <button type="submit">Transcribe</button>
+                </form>
+            </div>
+
+            <div class="download">
+                <form id="download-form" action="/download" method="GET">
+                    <button type="submit">Download</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
+</body>
+</html>

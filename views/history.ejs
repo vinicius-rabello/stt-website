@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            font-family: "Dosis";
+        }
+
+        body {
+            display: flex;
+            flex-flow: column;
+            margin: 0;
+            background-color: #219ebc;
+        }
+
+        .content {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #023047;
+            min-height: 82vh;
+            overflow-y: auto;
+        }
+
+        nav {
+            margin-top: 0;
+            height: 10vh;
+            background-color: #219ebc;
+            color: #ffffff;
+            padding: 0 1% 0 1%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .links {
+            display: flex;
+        }
+
+        .links a{
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 5px 0 5px;
+        }
+
+        .links a:hover {
+            color: #ffb703;
+        }
+
+        .content h1 {
+            margin-bottom: 0;
+            color: #ffffff;
+            text-shadow: 1px 1px 5px #000000;
+        }
+
+        .box {
+            display: flex;
+            flex-flow: column;
+            width: 50vw;
+            justify-content: space-between;
+            padding: 2% 0 2% 0;
+        }
+
+        .entry {
+            background-color: #ffffff;
+            margin: 1%;
+            border-radius: 10px;
+            padding: 0 2% 0 2%;
+            box-shadow: 2px 2px 10px #000000;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .entry-createdAt {
+            color: darkgray;
+            font-size: 70%;
+        }
+
+        .entry-footer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2% 0 2% 0;;
+        }
+
+        .entry-id {
+            color: darkgray;
+            font-size: 70%;
+        }
+        
+        .transcription {
+            margin: 0;
+        }
+
+        button {
+            border: solid 1px;
+            border-color: #023047;
+            background-color: #ffb703;
+            color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 2px #000000,
+            -0px -0px 2px #000000;
+        }
+
+        button:hover {
+            cursor: pointer;
+            box-shadow: 0 0 0, 0 0 0;
+        }
+
+        footer {
+            background-color: #219ebc;
+            display: flex;
+            justify-content: flex-end;
+            height: 8vh;
+            align-items: center;
+        }
+
+        footer p {
+            color: #ffffff;
+            margin-right: 1%;
+        }
+
+    </style>
+</head>
+<body>
+    
+    <%- include('./partials/nav.ejs') %>
+
+    <div class="content">
+        <h1><%= user %>'s transcription history:</h1>
+        <div class="box">
+            <% if (history.length > 0) { %>
+                <% history.reverse().forEach(entry => { %>
+                    <div class="entry">
+                        <div class="entry-header">
+                            <h3 class="filename"><%= entry.filename %></h3>
+                            <p class="entry-createdAt">createdAt <%= entry.createdAt %></p>
+                        </div>
+                        <p class="transcription"><%= entry.transcription %></p>
+                        <div class="entry-footer">
+                            <form id="download-form" action="/download/<%= String(entry._id) %>" method="GET">
+                                <button type="submit">Download</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } %>
+        </div>
+    </div>
+    <%- include('./partials/footer') %>
+</body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+        @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+        * {
+            font-family: "Dosis";
+        }
+
+        body {
+            display: flex;
+            flex-flow: column;
+            margin: 0;
+            background-color: #219ebc;
+        }
+
+        .content {
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            justify-content: center;
+            height: 82vh;
+            background-color: #023047;
+            position: relative;
+        }
+
+        nav {
+            margin-top: 0;
+            height: 10vh;
+            background-color: #219ebc;
+            color: #ffffff;
+            padding: 0 1% 0 1%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .box{
+            background-color: #8ecae6;
+            display: flex;
+            flex-flow: column;
+            height: 35vh;
+            width: 25vw;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+            box-shadow: 2px 2px 10px #000000;
+            padding-bottom: 1%;
+        }
+
+        .box h1 {
+            color: #ffffff;
+            text-shadow: 1px 1px 5px #023047;
+        }
+
+        .login{
+            height: 40vh;
+            width: 20vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly; 
+            flex-flow: column;
+        }
+
+        input {
+            width: 18vw;
+            height: 4vh;
+            border-radius: 5px;
+            border: solid 1px;
+            border-color: #023047;
+            box-shadow: 1px 1px 5px #023047;
+        }
+
+        button {
+            border: solid 1px;
+            border-color: #023047;
+            background-color: #ffb703;
+            color: #ffffff;
+            border-radius: 5px;
+            box-shadow: 0px 0px 2px #023047,
+            -0px -0px 2px #023047;
+            margin-top: 4%;
+        }
+
+        button:hover {
+            cursor: pointer;
+            box-shadow: 0px 0px 0px, 0px 0px 0px;
+        }
+
+        .error-message {
+            background-color: lightgray;
+            border: solid 1px red;
+            color: red;
+            position: absolute;
+            bottom: 5vh;
+            padding: 0.5%;
+        }
+
+        footer {
+            background-color: #219ebc;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        footer p {
+            color: #ffffff;
+            margin-right: 1%;
+        }
+
+    </style>
+</head>
+<body>
+    <nav>
+        <h1>Speech-to-Text</h1>
+    </nav>
+    
+    <div class="content">
+        <div class="box">
+            <h1>Sign In</h1>
+            <form class="login" action="/signin" method="POST">
+                <label for="email">E-mail:</label>
+                <input type="text" id="email" name="email" required>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <button>Sign In</button>
+                <a href="">Forgot your password?</a>
+                <a href="/signup">Don't have an account? Sign up here.</a>
+            </form>
+        </div>
+
+        <% if (loginFailed) { %>
+            <div class="error-message"><%= loginFailed %></div>
+        <% } %>
+    </div>
+    <%- include('./partials/footer') %>
+</body>
+</html>
